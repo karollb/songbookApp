@@ -10,6 +10,8 @@
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -21,13 +23,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SongbookApp">
         <activity
-            android:name=".PdfViewerOffline"
+            android:name=".TeamJoin"
             android:exported="false" />
         <activity
-            android:name=".SongbookOffline"
+            android:name=".TeamMaker"
             android:exported="false" />
         <activity
-            android:name=".Profile"
+            android:name=".UserTeam"
+            android:exported="false" />
+        <activity
+            android:name=".PdfViewer"
+            android:exported="false" />
+        <activity
+            android:name=".Songbook"
+            android:exported="false" />
+        <activity
+            android:name=".UserProfile"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SongbookApp</string>
     <string name="search">Search</string>
+    <string name="share">share</string>
 </resources>

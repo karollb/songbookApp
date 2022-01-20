@@ -19,8 +19,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-public class SongbookOffline extends AppCompatActivity {
+import pl.edu.wszib.songbookapp.services.SongService;
+import pl.edu.wszib.songbookapp.services.UserGoogleService;
+
+public class Songbook extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "message";
+
+    private final UserGoogleService userGoogleService = new UserGoogleService();
+    private final SongService songService = new SongService();
+
+    private Intent intent;
 
     private ArrayAdapter<String> arrayAdapter;
 
@@ -29,43 +37,32 @@ public class SongbookOffline extends AppCompatActivity {
     private TextView toolbarTextView;
 
 
+
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_songbook_offline);
+        setContentView(R.layout.activity_songbook);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
-        Intent intent = getIntent();
+
+        intent = getIntent();
 
         setDirectory(intent.getStringExtra(EXTRA_MESSAGE));
 
+        setToolbar();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbarTextView = toolbar.findViewById(R.id.toolbar_text_view);
-        toolbarTextView.setText(directory.getName());
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+        if (userGoogleService.isLoggedUser(getApplicationContext())) {
+            songService.setSongListener(getApplicationContext());
+        }
 
 
         ArrayList<String> fileNames = setFileList();
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, fileNames);
 
-        ListView listView = findViewById(R.id.files_list_view);
-        listView.setAdapter(arrayAdapter);
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            if (arrayAdapter.getItem(position).endsWith(".pdf")) {
-                Intent openPDF = new Intent(this, PdfViewerOffline.class);
-                openPDF.putExtra(PdfViewerOffline.EXTRA_MESSAGE, intent.getStringExtra(SongbookOffline.EXTRA_MESSAGE) + "/" + arrayAdapter.getItem(position));
-                startActivity(openPDF);
+        setListView();
 
-
-            } else {
-                Intent openDirectory = new Intent(SongbookOffline.this, SongbookOffline.class);
-                openDirectory.putExtra(SongbookOffline.EXTRA_MESSAGE, intent.getStringExtra(SongbookOffline.EXTRA_MESSAGE) + "/" + arrayAdapter.getItem(position));
-                startActivity(openDirectory);
-            }
-        });
 
     }
 
@@ -85,6 +82,25 @@ public class SongbookOffline extends AppCompatActivity {
         Collections.sort(arrayList, String.CASE_INSENSITIVE_ORDER);
 
         return arrayList;
+    }
+
+    private void setListView() {
+
+        ListView listView = findViewById(R.id.files_list_view);
+        listView.setAdapter(arrayAdapter);
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            if (arrayAdapter.getItem(position).endsWith(".pdf")) {
+                Intent openPDF = new Intent(this, PdfViewer.class);
+                openPDF.putExtra(PdfViewer.EXTRA_MESSAGE, intent.getStringExtra(Songbook.EXTRA_MESSAGE) + "/" + arrayAdapter.getItem(position));
+                startActivity(openPDF);
+
+
+            } else {
+                Intent openDirectory = new Intent(Songbook.this, Songbook.class);
+                openDirectory.putExtra(Songbook.EXTRA_MESSAGE, intent.getStringExtra(Songbook.EXTRA_MESSAGE) + "/" + arrayAdapter.getItem(position));
+                startActivity(openDirectory);
+            }
+        });
     }
 
     @Override
@@ -109,14 +125,23 @@ public class SongbookOffline extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                SongbookOffline.this.arrayAdapter.getFilter().filter(newText);
+                Songbook.this.arrayAdapter.getFilter().filter(newText);
                 return false;
             }
-
 
 
         });
 
         return super.onCreateOptionsMenu(menu);
     }
+
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbarTextView = toolbar.findViewById(R.id.toolbar_text_view);
+        toolbarTextView.setText(directory.getName());
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+    }
+
+
 }

@@ -3,8 +3,10 @@ package pl.edu.wszib.songbookapp;
 import static android.os.Build.VERSION.SDK_INT;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,12 +47,20 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            Intent intent = new Intent(getApplicationContext(), Profile.class);
-            startActivity(intent);
+
+        if (isNetworkConnected()) {
+            if (user != null) {
+                Intent intent = new Intent(getApplicationContext(), UserProfile.class);
+                startActivity(intent);
+            } else {
+                mGoogleSignInClient.signOut();
+            }
         } else {
             mGoogleSignInClient.signOut();
+            Toast.makeText(getApplicationContext(), "Brak dostępu do internetu", Toast.LENGTH_SHORT).show();
         }
+
+
 
     }
 
@@ -75,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
         Button offlineBtn = findViewById(R.id.offline_btn);
         offlineBtn.setOnClickListener(v -> {
-            Intent goOfflineMode = new Intent(getApplicationContext(), SongbookOffline.class);
-            goOfflineMode.putExtra(SongbookOffline.EXTRA_MESSAGE, path);
+            Intent goOfflineMode = new Intent(getApplicationContext(), Songbook.class);
+            goOfflineMode.putExtra(Songbook.EXTRA_MESSAGE, path);
             startActivity(goOfflineMode);
         });
 
@@ -183,8 +193,8 @@ public class MainActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
 
                         // Sign in success, update UI with the signed-in user's information
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        Intent intent = new Intent(getApplicationContext(), Profile.class);
+                        //FirebaseUser user = mAuth.getCurrentUser();
+                        Intent intent = new Intent(getApplicationContext(), UserProfile.class);
                         startActivity(intent);
 
                     } else {
@@ -192,6 +202,12 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
 }
