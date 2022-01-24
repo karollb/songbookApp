@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +24,7 @@ public class TeamService {
 
     private final UserService userService = new UserService();
 
-    public void joinToTeam(final Context context,final Activity activity ,final String teamName, final String teamPassword) {
+    public void joinToTeam(final Context context, final Activity activity, final String teamName, final String teamPassword) {
         DatabaseReference reference = database.getReference("Teams").child(teamName);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -37,7 +39,7 @@ public class TeamService {
                         assert user != null;
                         user.setTeamName(teamName);
                         reference.child("Members").child(user.getId()).setValue(user);
-                        userService.updateUserTeamName(user.getId(),teamName);
+                        userService.updateUserTeamName(user.getId(), teamName);
                         //userService.updateUserInFirebase(user);
                         activity.finish();
 
@@ -70,26 +72,35 @@ public class TeamService {
                     user.setTeamName(teamName);
                     teamRef.setValue(team);
                     teamRef.child("Members").child(user.getId()).setValue(user);
-                    userService.updateUserTeamName(user.getId(),teamName);
-                   // userService.updateUserInFirebase(user);
+                    userService.updateUserTeamName(user.getId(), teamName);
+                    // userService.updateUserInFirebase(user);
                     activity.finish();
 
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
     }
 
-    public void leaveTeam(final String teamName, final String userID) {
-
-        DatabaseReference teamRef = database.getReference("Teams").child(teamName).child("Members").child(userID);
-        teamRef.removeValue();
-        removeTeamIfNoMembers(teamName);
+    public void leaveTeam(final String teamName, final String userID, final Activity context) {
 
         userService.updateUserTeamName(userID, "");
+        DatabaseReference teamRef = database.getReference("Teams").child(teamName).child("Members").child(userID);
+        teamRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
 
+                if (task.isComplete()) {
+                    context.recreate();
+                }
+            }
+        });
+
+
+        removeTeamIfNoMembers(teamName);
 
 
     }

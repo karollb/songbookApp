@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Objects;
 
 import pl.edu.wszib.songbookapp.models.User;
+import pl.edu.wszib.songbookapp.services.SongService;
 import pl.edu.wszib.songbookapp.services.UserGoogleService;
 import pl.edu.wszib.songbookapp.services.UserService;
 
@@ -33,6 +34,7 @@ public class UserProfile extends AppCompatActivity {
 
     private final UserGoogleService userGoogleService = new UserGoogleService();
     private final UserService userService = new UserService();
+    private final SongService songService = new SongService();
 
 
     @Override
@@ -55,6 +57,8 @@ public class UserProfile extends AppCompatActivity {
             this.familyNameView.setText(user.getFamilyName());
             this.mailView.setText(user.getEmail());
         }
+
+        songService.setSongListener(getApplicationContext());
 
         songbookBtn.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), Songbook.class);

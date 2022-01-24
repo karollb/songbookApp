@@ -70,15 +70,7 @@ public class UserTeam extends AppCompatActivity {
 
 
             String teamName = teamTextView.getText().toString();
-            teamService.leaveTeam(teamName, userID);
-
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            recreate();
-
+            teamService.leaveTeam(teamName, userID, this);
 
         });
 
