@@ -19,6 +19,7 @@ import java.io.File;
 import java.util.Objects;
 
 import pl.edu.wszib.songbookapp.PdfViewer;
+import pl.edu.wszib.songbookapp.models.User;
 
 public class SongService {
 
@@ -82,5 +83,55 @@ public class SongService {
 
                     }
                 });
+    }
+
+    public void shareSong(final Context context,final File song) {
+        DatabaseReference userRef = database.getReference("Users/" + Objects.requireNonNull(userGoogleService.getLoggedInUser(context)).getId());
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+
+                assert user != null;
+                if (user.getTeamName().equals("")) {
+                    Toast.makeText(context, "Nie należysz do żadnego zespołu", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    DatabaseReference teamRef = database.getReference("Teams/" + user.getTeamName()+"/songName");
+                    teamRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                //Team team = snapshot.getValue(Team.class);
+
+                                if (Objects.requireNonNull(song.getParentFile()).getName().equals("Spiewnik")) {
+                                    // assert team != null;
+                                    // team.setSongName(song.getName());
+                                    teamRef.setValue(song.getName());
+                                } else {
+                                    //assert team != null;
+                                    //team.setSongName(song.getParentFile().getName() + "/" + song.getName());
+                                    teamRef.setValue(song.getParentFile().getName() + "/" + song.getName());
+                                }
+                                // teamRef.child("songName").setValue(team.getSongName());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

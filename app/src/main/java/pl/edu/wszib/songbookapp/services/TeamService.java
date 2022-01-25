@@ -14,6 +14,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.util.Objects;
+
 import pl.edu.wszib.songbookapp.models.Team;
 import pl.edu.wszib.songbookapp.models.User;
 
@@ -122,4 +125,5 @@ public class TeamService {
             }
         });
     }
+
 }

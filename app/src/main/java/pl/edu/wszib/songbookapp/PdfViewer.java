@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,17 +12,10 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import com.github.barteksc.pdfviewer.PDFView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.util.Objects;
 
-import pl.edu.wszib.songbookapp.models.Team;
-import pl.edu.wszib.songbookapp.models.User;
 import pl.edu.wszib.songbookapp.services.SongService;
 import pl.edu.wszib.songbookapp.services.UserGoogleService;
 
@@ -31,15 +23,13 @@ public class PdfViewer extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "message";
 
-    private final FirebaseDatabase database = FirebaseDatabase.getInstance("https://songbookapp-d0156-default-rtdb.europe-west1.firebasedatabase.app/");
-
     private final UserGoogleService userGoogleService = new UserGoogleService();
-
     private final SongService songService = new SongService();
 
 
     private File song;
-    Intent intent;
+    public static boolean nightMode=true;
+
 
     @Override
 
@@ -48,17 +38,12 @@ public class PdfViewer extends AppCompatActivity {
         setContentView(R.layout.activity_pdf_viewer);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
-        intent = getIntent();
+        Intent intent = getIntent();
 
         song = new File(intent.getStringExtra(EXTRA_MESSAGE));
 
+
         setToolbar();
-
-//        if (userGoogleService.isLoggedUser(getApplicationContext())) {
-//            songService.setSongListener(getApplicationContext());
-//        }
-
-
 
 
         PDFView pdfView = findViewById(R.id.pdfViewer);
@@ -78,11 +63,10 @@ public class PdfViewer extends AppCompatActivity {
                 .fitEachPage(false) // fit each page to the view, else smaller pages are scaled relative to largest page.
                 .pageSnap(false) // snap pages to screen boundaries
                 .pageFling(false) // make a fling change only a single page like ViewPager
-                .nightMode(true) // toggle night mode
+                .nightMode(nightMode) // toggle night mode
                 .load();
 
     }
-
 
 
     private void setToolbar() {
@@ -93,11 +77,19 @@ public class PdfViewer extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (userGoogleService.isLoggedUser(getApplicationContext())) {
-            getMenuInflater().inflate(R.menu.menu_share, menu);
+        getMenuInflater().inflate(R.menu.menu_pdf_viewer, menu);
+        menu.findItem(R.id.share).setVisible(userGoogleService.isLoggedUser(getApplicationContext()));
+
+        MenuItem changeThemeItem = menu.findItem(R.id.changeTheme);
+        if (nightMode) {
+            changeThemeItem.setIcon(R.drawable.ic_baseline_wb_sunny_24);
+        } else {
+            changeThemeItem.setIcon(R.drawable.ic_baseline_nights_stay_24);
         }
+
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -105,59 +97,26 @@ public class PdfViewer extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.share) {
+            songService.shareSong(getApplicationContext(), song);
+        }
 
-            DatabaseReference userRef = database.getReference("Users/" + Objects.requireNonNull(userGoogleService.getLoggedInUser(getApplicationContext())).getId());
-
-            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    User user = snapshot.getValue(User.class);
-
-                    assert user != null;
-                    if (user.getTeamName().equals("")) {
-                        Toast.makeText(getApplicationContext(), "Nie należysz do żadnego zespołu", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        DatabaseReference teamRef = database.getReference("Teams/" + user.getTeamName()+"/songName");
-                        teamRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists()) {
-                                    //Team team = snapshot.getValue(Team.class);
-
-                                    if (Objects.requireNonNull(song.getParentFile()).getName().equals("Spiewnik")) {
-                                       // assert team != null;
-                                       // team.setSongName(song.getName());
-                                        teamRef.setValue(song.getName());
-                                    } else {
-                                        //assert team != null;
-                                        //team.setSongName(song.getParentFile().getName() + "/" + song.getName());
-                                        teamRef.setValue(song.getParentFile().getName() + "/" + song.getName());
-                                    }
-                                   // teamRef.child("songName").setValue(team.getSongName());
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    }
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
+        if (item.getItemId() == R.id.changeTheme) {
+            nightMode = !nightMode;
+            recreate();
 
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        nightMode = savedInstanceState.getBoolean("nightMode", true);
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putBoolean("nightMode", nightMode);
+        super.onSaveInstanceState(outState);
+    }
 }
