@@ -1,6 +1,5 @@
 package pl.edu.wszib.songbookapp.services;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
@@ -43,18 +42,21 @@ public class SongService {
 
                             @Override
                             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                String songName = snapshot.getValue(String.class);
+                                if (Objects.equals(snapshot.getKey(), "songName")) {
+                                    String songName = snapshot.getValue(String.class);
 
-                                File file = new File(Environment.getExternalStorageDirectory() + "/Spiewnik/" + songName);
-                                if (!file.exists()) {
-                                    Toast.makeText(context, "Użytkownik próbował udostępnić plik, którego nie posiadasz, lub masz go w innej lokalizacji", Toast.LENGTH_LONG).show();
-                                } else {
-                                    Intent intent = new Intent(context, PdfViewer.class);
-                                    intent.putExtra(PdfViewer.EXTRA_MESSAGE, Environment.getExternalStorageDirectory() + "/Spiewnik/" + songName);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    context.startActivity(intent);
+                                    File file = new File(Environment.getExternalStorageDirectory() + "/Spiewnik/" + songName);
+                                    if (!file.exists()) {
+                                        Toast.makeText(context, "Użytkownik próbował udostępnić plik, którego nie posiadasz, lub masz go w innej lokalizacji", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Intent intent = new Intent(context, PdfViewer.class);
+                                        intent.putExtra(PdfViewer.EXTRA_MESSAGE, Environment.getExternalStorageDirectory() + "/Spiewnik/" + songName);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        context.startActivity(intent);
+                                    }
                                 }
+
 
                             }
 

@@ -54,9 +54,9 @@ public class PdfViewer extends AppCompatActivity {
 
         setToolbar();
 
-        if (userGoogleService.isLoggedUser(getApplicationContext())) {
-            songService.setSongListener(getApplicationContext());
-        }
+//        if (userGoogleService.isLoggedUser(getApplicationContext())) {
+//            songService.setSongListener(getApplicationContext());
+//        }
 
 
 
@@ -118,21 +118,23 @@ public class PdfViewer extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Nie należysz do żadnego zespołu", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        DatabaseReference teamRef = database.getReference("Teams/" + user.getTeamName());
+                        DatabaseReference teamRef = database.getReference("Teams/" + user.getTeamName()+"/songName");
                         teamRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (snapshot.exists()) {
-                                    Team team = snapshot.getValue(Team.class);
+                                    //Team team = snapshot.getValue(Team.class);
 
                                     if (Objects.requireNonNull(song.getParentFile()).getName().equals("Spiewnik")) {
-                                        assert team != null;
-                                        team.setSongName(song.getName());
+                                       // assert team != null;
+                                       // team.setSongName(song.getName());
+                                        teamRef.setValue(song.getName());
                                     } else {
-                                        assert team != null;
-                                        team.setSongName(song.getParentFile().getName() + "/" + song.getName());
+                                        //assert team != null;
+                                        //team.setSongName(song.getParentFile().getName() + "/" + song.getName());
+                                        teamRef.setValue(song.getParentFile().getName() + "/" + song.getName());
                                     }
-                                    teamRef.child("songName").setValue(team.getSongName());
+                                   // teamRef.child("songName").setValue(team.getSongName());
                                 }
                             }
 

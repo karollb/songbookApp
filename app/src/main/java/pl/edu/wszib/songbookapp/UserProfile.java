@@ -58,7 +58,10 @@ public class UserProfile extends AppCompatActivity {
             this.mailView.setText(user.getEmail());
         }
 
-        songService.setSongListener(getApplicationContext());
+        //  songService.setSongListener(getApplicationContext());
+        if (userGoogleService.isLoggedUser(getApplicationContext())) {
+            songService.setSongListener(getApplicationContext());
+        }
 
         songbookBtn.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), Songbook.class);
@@ -77,6 +80,12 @@ public class UserProfile extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onRestart() {
+        recreate();
+        super.onRestart();
     }
 
     private void setViews() {

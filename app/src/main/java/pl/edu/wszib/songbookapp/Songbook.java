@@ -53,9 +53,9 @@ public class Songbook extends AppCompatActivity {
 
         setToolbar();
 
-        if (userGoogleService.isLoggedUser(getApplicationContext())) {
-            songService.setSongListener(getApplicationContext());
-        }
+//        if (userGoogleService.isLoggedUser(getApplicationContext())) {
+//            songService.setSongListener(getApplicationContext());
+//        }
 
 
         ArrayList<String> fileNames = setFileList();
