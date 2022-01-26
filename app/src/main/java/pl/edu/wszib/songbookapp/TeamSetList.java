@@ -71,7 +71,6 @@ public class TeamSetList extends AppCompatActivity {
         registerForContextMenu(listView);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
-
             Intent intent = new Intent(getApplicationContext(), PdfViewer.class);
             intent.putExtra(PdfViewer.EXTRA_MESSAGE, Environment.getExternalStorageDirectory() + "/Spiewnik/" + adapter.getItem(position).getSongPath());
             startActivity(intent);
@@ -95,7 +94,6 @@ public class TeamSetList extends AppCompatActivity {
                 setListRef.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                        DedicationModel dedicationModel = snapshot.getValue(DedicationModel.class);
                         dedicationModelList.add(snapshot.getValue(DedicationModel.class));
                         adapter.notifyDataSetChanged();
 

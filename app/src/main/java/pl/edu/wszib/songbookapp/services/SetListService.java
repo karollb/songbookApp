@@ -1,15 +1,9 @@
 package pl.edu.wszib.songbookapp.services;
 
-import android.app.Activity;
 import android.content.Context;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,11 +11,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import pl.edu.wszib.songbookapp.adapters.DedicationAdapter;
 import pl.edu.wszib.songbookapp.models.DedicationModel;
 
 public class SetListService {
@@ -38,12 +30,25 @@ public class SetListService {
                 String teamName = snapshot.getValue(String.class);
 
                 DatabaseReference teamRef = database.getReference("Teams/" + teamName + "/teamSetList");
-                teamRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                teamRef.orderByValue().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        long childrenCount = snapshot.getChildrenCount();
-                        dedicationModel.setId(Long.toString(childrenCount));
-                        teamRef.child(dedicationModel.getId()).setValue(dedicationModel);
+                        if (snapshot.exists()) {
+                            List<String> idList = new ArrayList<>();
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                String id = dataSnapshot.child("id").getValue(String.class);
+                                idList.add(id);
+                            }
+                            int id = Integer.parseInt(idList.get(idList.size() - 1))+1;
+
+
+                            dedicationModel.setId(Integer.toString(id));
+
+                        }
+                            teamRef.child(dedicationModel.getId()).setValue(dedicationModel);
+
+
+
                     }
 
                     @Override
