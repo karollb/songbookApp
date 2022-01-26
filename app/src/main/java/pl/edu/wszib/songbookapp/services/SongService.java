@@ -57,8 +57,6 @@ public class SongService {
                                         context.startActivity(intent);
                                     }
                                 }
-
-
                             }
 
                             @Override
@@ -103,18 +101,12 @@ public class SongService {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
-                                //Team team = snapshot.getValue(Team.class);
-
                                 if (Objects.requireNonNull(song.getParentFile()).getName().equals("Spiewnik")) {
-                                    // assert team != null;
-                                    // team.setSongName(song.getName());
                                     teamRef.setValue(song.getName());
                                 } else {
-                                    //assert team != null;
-                                    //team.setSongName(song.getParentFile().getName() + "/" + song.getName());
                                     teamRef.setValue(song.getParentFile().getName() + "/" + song.getName());
                                 }
-                                // teamRef.child("songName").setValue(team.getSongName());
+
                             }
                         }
 

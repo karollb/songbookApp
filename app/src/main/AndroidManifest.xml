@@ -10,7 +10,6 @@
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -22,6 +21,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SongbookApp">
+        <activity
+            android:name=".SelectSong"
+            android:exported="false" />
+        <activity
+            android:name=".AddSongToSetList"
+            android:exported="false" />
+        <activity
+            android:name=".TeamSetList"
+            android:exported="false" />
         <activity
             android:name=".TeamJoin"
             android:exported="false" />

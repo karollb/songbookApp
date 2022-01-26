@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.File;
 import java.util.Objects;
 
+import pl.edu.wszib.songbookapp.models.DedicationModel;
 import pl.edu.wszib.songbookapp.models.Team;
 import pl.edu.wszib.songbookapp.models.User;
 
@@ -43,7 +44,6 @@ public class TeamService {
                         user.setTeamName(teamName);
                         reference.child("Members").child(user.getId()).setValue(user);
                         userService.updateUserTeamName(user.getId(), teamName);
-                        //userService.updateUserInFirebase(user);
                         activity.finish();
 
 
@@ -76,7 +76,6 @@ public class TeamService {
                     teamRef.setValue(team);
                     teamRef.child("Members").child(user.getId()).setValue(user);
                     userService.updateUserTeamName(user.getId(), teamName);
-                    // userService.updateUserInFirebase(user);
                     activity.finish();
 
                 }
@@ -92,21 +91,17 @@ public class TeamService {
 
         userService.updateUserTeamName(userID, "");
         DatabaseReference teamRef = database.getReference("Teams").child(teamName).child("Members").child(userID);
-        teamRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
+        teamRef.removeValue().addOnCompleteListener(task -> {
 
-                if (task.isComplete()) {
-                    context.recreate();
-                }
+            if (task.isComplete()) {
+                context.recreate();
             }
         });
 
 
         removeTeamIfNoMembers(teamName);
-
-
     }
+
 
     private void removeTeamIfNoMembers(final String teamName) {
         DatabaseReference reference = database.getReference("Teams").child(teamName).child("Members");

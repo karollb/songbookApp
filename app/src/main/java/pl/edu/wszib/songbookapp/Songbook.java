@@ -25,9 +25,6 @@ import pl.edu.wszib.songbookapp.services.UserGoogleService;
 public class Songbook extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "message";
 
-    private final UserGoogleService userGoogleService = new UserGoogleService();
-    private final SongService songService = new SongService();
-
     private Intent intent;
 
     private ArrayAdapter<String> arrayAdapter;
@@ -53,9 +50,6 @@ public class Songbook extends AppCompatActivity {
 
         setToolbar();
 
-//        if (userGoogleService.isLoggedUser(getApplicationContext())) {
-//            songService.setSongListener(getApplicationContext());
-//        }
 
 
         ArrayList<String> fileNames = setFileList();

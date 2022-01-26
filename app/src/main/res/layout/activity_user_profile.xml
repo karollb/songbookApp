@@ -61,7 +61,7 @@
         android:id="@+id/songbook_btn"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/radius_btn"
         android:focusableInTouchMode="false"
         android:selectAllOnFocus="false"
@@ -79,7 +79,7 @@
         android:text="Zespół"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/songbook_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/setlist_btn" />
 
     <Button
         android:id="@+id/logout_btn"
@@ -91,5 +91,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/setlist_btn"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/radius_btn"
+        android:text="dedykacje / setlista"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/songbook_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

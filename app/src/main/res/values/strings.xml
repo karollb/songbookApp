@@ -3,4 +3,6 @@
     <string name="search">Search</string>
     <string name="share">share</string>
     <string name="change_theme">change theme</string>
+    <string name="add">add</string>
+    <string name="delete">usuń</string>
 </resources>

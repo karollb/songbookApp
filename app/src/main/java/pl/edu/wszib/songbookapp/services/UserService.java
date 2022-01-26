@@ -1,5 +1,9 @@
 package pl.edu.wszib.songbookapp.services;
 
+import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -8,11 +12,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
+import pl.edu.wszib.songbookapp.TeamSetList;
 import pl.edu.wszib.songbookapp.models.User;
 
 public class UserService {
 
     private final FirebaseDatabase database = FirebaseDatabase.getInstance("https://songbookapp-d0156-default-rtdb.europe-west1.firebasedatabase.app/");
+    private final UserGoogleService userGoogleService = new UserGoogleService();
 
     public void addUserToFirebase(final User user) {
         DatabaseReference reference = database.getReference("Users");
@@ -56,6 +64,29 @@ public class UserService {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     reference.setValue(teamName);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void startActivityIfUserHasTeam(final Context context, final String path) {
+        DatabaseReference reference = database.getReference("Users/" + Objects.requireNonNull(userGoogleService.getLoggedInUser(context)).getId());
+
+        reference.child("teamName").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (Objects.equals(snapshot.getValue(String.class), "")) {
+                    Toast.makeText(context, "Nie należysz do żadnego zespołu", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(context, TeamSetList.class);
+                    intent.putExtra(TeamSetList.EXTRA_MESSAGE, path);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
                 }
             }
 

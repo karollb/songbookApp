@@ -3,20 +3,15 @@ package pl.edu.wszib.songbookapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
@@ -28,7 +23,7 @@ import pl.edu.wszib.songbookapp.services.UserService;
 public class UserProfile extends AppCompatActivity {
 
     private TextView givenNameView, familyNameView, mailView;
-    private Button teamBtn, logoutBtn, songbookBtn;
+    private Button teamBtn, logoutBtn, songbookBtn, setListBtn;
 
     private final String path = Environment.getExternalStorageDirectory() + "/Spiewnik";
 
@@ -69,6 +64,16 @@ public class UserProfile extends AppCompatActivity {
             startActivity(intent);
         });
 
+        setListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userService.startActivityIfUserHasTeam(getApplicationContext(), path);
+//                Intent intent = new Intent(getApplicationContext(), TeamSetList.class);
+//                intent.putExtra(TeamSetList.EXTRA_MESSAGE, path);
+//                startActivity(intent);
+            }
+        });
+
         teamBtn.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), UserTeam.class);
             startActivity(intent);
@@ -95,6 +100,7 @@ public class UserProfile extends AppCompatActivity {
         this.teamBtn = findViewById(R.id.team_btn);
         this.logoutBtn = findViewById(R.id.logout_btn);
         this.songbookBtn = findViewById(R.id.songbook_btn);
+        this.setListBtn = findViewById(R.id.setlist_btn);
     }
 
     private void setToolbar() {
