@@ -6,23 +6,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.Objects;
 
-import pl.edu.wszib.songbookapp.models.Team;
-import pl.edu.wszib.songbookapp.models.User;
-import pl.edu.wszib.songbookapp.services.TeamService;
-import pl.edu.wszib.songbookapp.services.UserGoogleService;
+import pl.edu.wszib.songbookapp.services.ITeamService;
+import pl.edu.wszib.songbookapp.services.impl.TeamServiceImpl;
 
 public class TeamMaker extends AppCompatActivity {
 
@@ -31,7 +22,7 @@ public class TeamMaker extends AppCompatActivity {
     private Button submitBtn;
 
 
-    private final TeamService teamService = new TeamService();
+    private final ITeamService teamService = new TeamServiceImpl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

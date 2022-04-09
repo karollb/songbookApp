@@ -12,7 +12,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
 
-import pl.edu.wszib.songbookapp.services.TeamService;
+import pl.edu.wszib.songbookapp.services.ITeamService;
+import pl.edu.wszib.songbookapp.services.impl.TeamServiceImpl;
 
 public class TeamJoin extends AppCompatActivity {
 
@@ -20,7 +21,7 @@ public class TeamJoin extends AppCompatActivity {
     private Button submitBtn;
 
 
-    private final TeamService teamService = new TeamService();
+    private final ITeamService teamService = new TeamServiceImpl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

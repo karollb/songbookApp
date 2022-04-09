@@ -1,33 +1,29 @@
 package pl.edu.wszib.songbookapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import pl.edu.wszib.songbookapp.models.User;
-import pl.edu.wszib.songbookapp.services.TeamService;
-import pl.edu.wszib.songbookapp.services.UserGoogleService;
+import pl.edu.wszib.songbookapp.services.ITeamService;
+import pl.edu.wszib.songbookapp.services.IUserGoogleService;
+import pl.edu.wszib.songbookapp.services.impl.TeamServiceImpl;
+import pl.edu.wszib.songbookapp.services.impl.UserGoogleServiceImpl;
 
 public class UserTeam extends AppCompatActivity {
 
@@ -40,8 +36,8 @@ public class UserTeam extends AppCompatActivity {
 
     private final FirebaseDatabase database = FirebaseDatabase.getInstance("https://songbookapp-d0156-default-rtdb.europe-west1.firebasedatabase.app/");
 
-    private final UserGoogleService userGoogleService = new UserGoogleService();
-    private final TeamService teamService = new TeamService();
+    private final IUserGoogleService userGoogleService = new UserGoogleServiceImpl();
+    private final ITeamService teamService = new TeamServiceImpl();
 
 
     @Override

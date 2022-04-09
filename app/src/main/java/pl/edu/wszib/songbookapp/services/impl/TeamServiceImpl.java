@@ -1,4 +1,4 @@
-package pl.edu.wszib.songbookapp.services;
+package pl.edu.wszib.songbookapp.services.impl;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,27 +6,24 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
-import java.util.Objects;
-
-import pl.edu.wszib.songbookapp.models.DedicationModel;
 import pl.edu.wszib.songbookapp.models.Team;
 import pl.edu.wszib.songbookapp.models.User;
+import pl.edu.wszib.songbookapp.services.ITeamService;
+import pl.edu.wszib.songbookapp.services.IUserGoogleService;
+import pl.edu.wszib.songbookapp.services.IUserService;
 
-public class TeamService {
+public class TeamServiceImpl implements ITeamService {
 
     private final FirebaseDatabase database = FirebaseDatabase.getInstance("https://songbookapp-d0156-default-rtdb.europe-west1.firebasedatabase.app/");
-    private final UserGoogleService userGoogleService = new UserGoogleService();
+    private final IUserGoogleService userGoogleService = new UserGoogleServiceImpl();
 
-    private final UserService userService = new UserService();
+    private final IUserService userService = new UserServiceImpl();
 
     public void joinToTeam(final Context context, final Activity activity, final String teamName, final String teamPassword) {
         DatabaseReference reference = database.getReference("Teams").child(teamName);

@@ -1,4 +1,4 @@
-package pl.edu.wszib.songbookapp.services;
+package pl.edu.wszib.songbookapp.services.impl;
 
 import android.content.Context;
 
@@ -15,11 +15,13 @@ import java.util.List;
 import java.util.Objects;
 
 import pl.edu.wszib.songbookapp.models.DedicationModel;
+import pl.edu.wszib.songbookapp.services.ISetListService;
+import pl.edu.wszib.songbookapp.services.IUserGoogleService;
 
-public class SetListService {
+public class SetListServiceImpl implements ISetListService {
 
     private final FirebaseDatabase database = FirebaseDatabase.getInstance("https://songbookapp-d0156-default-rtdb.europe-west1.firebasedatabase.app/");
-    private final UserGoogleService userGoogleService = new UserGoogleService();
+    private final IUserGoogleService userGoogleService = new UserGoogleServiceImpl();
 
 
     public void addSongToSetList(final Context context, final DedicationModel dedicationModel) {
@@ -40,14 +42,9 @@ public class SetListService {
                                 idList.add(id);
                             }
                             int id = Integer.parseInt(idList.get(idList.size() - 1))+1;
-
-
                             dedicationModel.setId(Integer.toString(id));
-
                         }
                             teamRef.child(dedicationModel.getId()).setValue(dedicationModel);
-
-
 
                     }
 

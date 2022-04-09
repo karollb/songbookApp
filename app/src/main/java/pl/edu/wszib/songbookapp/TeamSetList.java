@@ -32,17 +32,19 @@ import java.util.Objects;
 
 import pl.edu.wszib.songbookapp.adapters.DedicationAdapter;
 import pl.edu.wszib.songbookapp.models.DedicationModel;
-import pl.edu.wszib.songbookapp.services.SetListService;
-import pl.edu.wszib.songbookapp.services.UserGoogleService;
+import pl.edu.wszib.songbookapp.services.ISetListService;
+import pl.edu.wszib.songbookapp.services.IUserGoogleService;
+import pl.edu.wszib.songbookapp.services.impl.SetListServiceImpl;
+import pl.edu.wszib.songbookapp.services.impl.UserGoogleServiceImpl;
 
 public class TeamSetList extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "message";
 
-    private final UserGoogleService userGoogleService = new UserGoogleService();
+    private final IUserGoogleService userGoogleService = new UserGoogleServiceImpl();
     private final FirebaseDatabase database = FirebaseDatabase.getInstance("https://songbookapp-d0156-default-rtdb.europe-west1.firebasedatabase.app/");
 
-    private final SetListService setListService = new SetListService();
+    private final ISetListService setListService = new SetListServiceImpl();
 
 
     private List<DedicationModel> dedicationModelList;

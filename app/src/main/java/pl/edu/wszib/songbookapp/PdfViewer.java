@@ -16,15 +16,17 @@ import com.github.barteksc.pdfviewer.PDFView;
 import java.io.File;
 import java.util.Objects;
 
-import pl.edu.wszib.songbookapp.services.SongService;
-import pl.edu.wszib.songbookapp.services.UserGoogleService;
+import pl.edu.wszib.songbookapp.services.ISongService;
+import pl.edu.wszib.songbookapp.services.IUserGoogleService;
+import pl.edu.wszib.songbookapp.services.impl.SongServiceImpl;
+import pl.edu.wszib.songbookapp.services.impl.UserGoogleServiceImpl;
 
 public class PdfViewer extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "message";
 
-    private final UserGoogleService userGoogleService = new UserGoogleService();
-    private final SongService songService = new SongService();
+    private final IUserGoogleService userGoogleService = new UserGoogleServiceImpl();
+    private final ISongService songService = new SongServiceImpl();
 
 
     private File song;

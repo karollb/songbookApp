@@ -3,7 +3,6 @@ package pl.edu.wszib.songbookapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,11 +20,12 @@ import java.io.File;
 import java.util.Objects;
 
 import pl.edu.wszib.songbookapp.models.DedicationModel;
-import pl.edu.wszib.songbookapp.services.SetListService;
+import pl.edu.wszib.songbookapp.services.ISetListService;
+import pl.edu.wszib.songbookapp.services.impl.SetListServiceImpl;
 
 public class AddSongToSetList extends AppCompatActivity {
 
-    private final SetListService setListService = new SetListService();
+    private final ISetListService setListService = new SetListServiceImpl();
 
     private EditText dedicationContent;
     private TextView songNameTextView;

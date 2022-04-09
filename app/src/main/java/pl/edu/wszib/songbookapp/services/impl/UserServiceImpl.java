@@ -1,4 +1,4 @@
-package pl.edu.wszib.songbookapp.services;
+package pl.edu.wszib.songbookapp.services.impl;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,11 +16,13 @@ import java.util.Objects;
 
 import pl.edu.wszib.songbookapp.TeamSetList;
 import pl.edu.wszib.songbookapp.models.User;
+import pl.edu.wszib.songbookapp.services.IUserGoogleService;
+import pl.edu.wszib.songbookapp.services.IUserService;
 
-public class UserService {
+public class UserServiceImpl implements IUserService {
 
     private final FirebaseDatabase database = FirebaseDatabase.getInstance("https://songbookapp-d0156-default-rtdb.europe-west1.firebasedatabase.app/");
-    private final UserGoogleService userGoogleService = new UserGoogleService();
+    private final IUserGoogleService userGoogleService = new UserGoogleServiceImpl();
 
     public void addUserToFirebase(final User user) {
         DatabaseReference reference = database.getReference("Users");

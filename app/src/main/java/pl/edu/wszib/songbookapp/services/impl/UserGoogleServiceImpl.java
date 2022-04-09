@@ -1,4 +1,4 @@
-package pl.edu.wszib.songbookapp.services;
+package pl.edu.wszib.songbookapp.services.impl;
 
 
 
@@ -8,8 +8,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import pl.edu.wszib.songbookapp.models.User;
+import pl.edu.wszib.songbookapp.services.IUserGoogleService;
 
-public class UserGoogleService {
+public class UserGoogleServiceImpl implements IUserGoogleService {
 
 
 

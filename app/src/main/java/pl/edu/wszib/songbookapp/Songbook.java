@@ -19,9 +19,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-import pl.edu.wszib.songbookapp.services.SongService;
-import pl.edu.wszib.songbookapp.services.UserGoogleService;
-
 public class Songbook extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "message";
 

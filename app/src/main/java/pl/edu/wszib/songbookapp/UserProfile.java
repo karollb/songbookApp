@@ -16,9 +16,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Objects;
 
 import pl.edu.wszib.songbookapp.models.User;
-import pl.edu.wszib.songbookapp.services.SongService;
-import pl.edu.wszib.songbookapp.services.UserGoogleService;
-import pl.edu.wszib.songbookapp.services.UserService;
+import pl.edu.wszib.songbookapp.services.ISongService;
+import pl.edu.wszib.songbookapp.services.IUserGoogleService;
+import pl.edu.wszib.songbookapp.services.IUserService;
+import pl.edu.wszib.songbookapp.services.impl.SongServiceImpl;
+import pl.edu.wszib.songbookapp.services.impl.UserGoogleServiceImpl;
+import pl.edu.wszib.songbookapp.services.impl.UserServiceImpl;
 
 public class UserProfile extends AppCompatActivity {
 
@@ -27,9 +30,9 @@ public class UserProfile extends AppCompatActivity {
 
     private final String path = Environment.getExternalStorageDirectory() + "/Spiewnik";
 
-    private final UserGoogleService userGoogleService = new UserGoogleService();
-    private final UserService userService = new UserService();
-    private final SongService songService = new SongService();
+    private final IUserGoogleService userGoogleService = new UserGoogleServiceImpl();
+    private final IUserService userService = new UserServiceImpl();
+    private final ISongService songService = new SongServiceImpl();
 
 
     @Override
