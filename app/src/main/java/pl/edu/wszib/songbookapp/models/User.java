@@ -1,12 +1,11 @@
 package pl.edu.wszib.songbookapp.models;
 
 public class User {
-    private String id;
-    private String givenName;
-    private String familyName;
-    private String email;
+    private  String id;
+    private  String givenName;
+    private  String familyName;
+    private  String email;
     private String teamName;
-
 
     public User() {
     }
@@ -23,32 +22,16 @@ public class User {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getGivenName() {
         return givenName;
-    }
-
-    public void setGivenName(String givenName) {
-        this.givenName = givenName;
     }
 
     public String getFamilyName() {
         return familyName;
     }
 
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getTeamName() {

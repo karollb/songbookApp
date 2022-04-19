@@ -6,11 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="0dp"
+        android:layout_height="227dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_sluchawki"
+        android:contentDescription="@string/logo_description" />
+
     <TextView
         android:id="@+id/logoText"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="SongbookApp"
+        android:text="@string/App_name"
         android:textAlignment="center"
         android:textColor="@color/gold"
         android:textSize="34sp"
@@ -22,24 +34,13 @@
         app:layout_constraintTop_toBottomOf="@+id/logo"
         app:layout_constraintVertical_bias="0.088" />
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="0dp"
-        android:layout_height="227dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_sluchawki" />
-
     <Button
         android:id="@+id/signIn_btn"
         android:layout_width="300dp"
         android:layout_height="80dp"
         android:layout_marginTop="70dp"
         android:background="@drawable/radius_btn"
-        android:text="Zaloguj"
+        android:text="@string/Sign_in"
         android:textAlignment="center"
         app:icon="@drawable/ic_google"
         app:iconTint="#fff"
@@ -54,7 +55,7 @@
         android:layout_height="80dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/radius_btn"
-        android:text="uruchom w trybie offline"
+        android:text="@string/offline_mode"
         android:textAlignment="center"
         app:icon="@drawable/ic_baseline_cloud_off_24"
         app:iconTint="#fff"
@@ -67,9 +68,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
-        android:text="Aplikacja do współdzielenia utworów muzycznych"
+        android:text="@string/footer_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+

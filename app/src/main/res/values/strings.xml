@@ -5,4 +5,9 @@
     <string name="change_theme">change theme</string>
     <string name="add">add</string>
     <string name="delete">usuń</string>
+    <string name="Sign_in">Zaloguj</string>
+    <string name="offline_mode">uruchom w trybie offline</string>
+    <string name="footer_text">Aplikacja do współdzielenia utworów muzycznych</string>
+    <string name="App_name">SongbookApp</string>
+    <string name="logo_description">Logo w kształcie słuchawek</string>
 </resources>
