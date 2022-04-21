@@ -14,7 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-import pl.edu.wszib.songbookapp.TeamSetList;
+import pl.edu.wszib.songbookapp.activities.TeamSetList;
 import pl.edu.wszib.songbookapp.models.User;
 import pl.edu.wszib.songbookapp.services.IUserGoogleService;
 import pl.edu.wszib.songbookapp.services.IUserService;

@@ -22,34 +22,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SongbookApp">
         <activity
-            android:name=".SelectSong"
+            android:name=".activities.SelectSong"
             android:exported="false" />
         <activity
-            android:name=".AddSongToSetList"
+            android:name=".activities.AddSongToSetList"
             android:exported="false" />
         <activity
-            android:name=".TeamSetList"
+            android:name=".activities.TeamSetList"
             android:exported="false" />
         <activity
-            android:name=".TeamJoin"
+            android:name=".activities.TeamJoin"
             android:exported="false" />
         <activity
-            android:name=".TeamMaker"
+            android:name=".activities.TeamMaker"
             android:exported="false" />
         <activity
-            android:name=".UserTeam"
+            android:name=".activities.UserTeam"
             android:exported="false" />
         <activity
-            android:name=".PdfViewer"
+            android:name=".activities.PdfViewer"
             android:exported="false" />
         <activity
-            android:name=".Songbook"
+            android:name=".activities.Songbook"
             android:exported="false" />
         <activity
-            android:name=".UserProfile"
+            android:name=".activities.UserProfile"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

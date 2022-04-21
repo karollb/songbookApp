@@ -1,4 +1,4 @@
-package pl.edu.wszib.songbookapp;
+package pl.edu.wszib.songbookapp.activities;
 
 import static android.os.Build.VERSION.SDK_INT;
 
@@ -31,6 +31,8 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import pl.edu.wszib.songbookapp.R;
 
 public class MainActivity extends AppCompatActivity {
 

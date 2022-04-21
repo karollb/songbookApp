@@ -1,16 +1,7 @@
-package pl.edu.wszib.songbookapp;
-
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+package pl.edu.wszib.songbookapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -18,16 +9,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-public class SelectSong extends AppCompatActivity {
+import pl.edu.wszib.songbookapp.R;
 
-    public static String EXTRA_MESSAGE = "message";
+public class Songbook extends AppCompatActivity {
+    public static final String EXTRA_MESSAGE = "message";
 
     private Intent intent;
 
@@ -35,42 +30,25 @@ public class SelectSong extends AppCompatActivity {
 
     private File directory;
 
-    private String dirName;
-
     private TextView toolbarTextView;
 
-    private static int resultCode = 78;
 
-
-    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-
-                if (result.getResultCode() == 80) {
-                    Intent intent = result.getData();
-
-                    if (intent != null) {
-                        String data = intent.getStringExtra("result");
-                        Intent selectSong = new Intent();
-                        selectSong.putExtra("result", data);
-                        setResult(78, selectSong);
-                        finish();
-                    }
-                }
-
-            }
-    );
 
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_song);
+        setContentView(R.layout.activity_songbook);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+
         intent = getIntent();
 
         setDirectory(intent.getStringExtra(EXTRA_MESSAGE));
 
         setToolbar();
+
 
 
         ArrayList<String> fileNames = setFileList();
@@ -101,44 +79,22 @@ public class SelectSong extends AppCompatActivity {
 
     private void setListView() {
 
-        ListView listView = findViewById(R.id.files_list_view_2);
+        ListView listView = findViewById(R.id.files_list_view);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             if (arrayAdapter.getItem(position).endsWith(".pdf")) {
-                Intent selectSong = new Intent();
-                File file = new File(intent.getStringExtra(SelectSong.EXTRA_MESSAGE) + "/" + arrayAdapter.getItem(position));
-                if (Objects.requireNonNull(file.getParentFile()).getName().equals("Spiewnik")) {
-                    selectSong.putExtra("result", file.getName());
-                } else {
-                    selectSong.putExtra("result", file.getParentFile().getName() + "/" + file.getName());
-                }
-                setResult(resultCode, selectSong);
-                resultCode = 78;
-                finish();
+                Intent openPDF = new Intent(this, PdfViewer.class);
+                openPDF.putExtra(PdfViewer.EXTRA_MESSAGE, intent.getStringExtra(Songbook.EXTRA_MESSAGE) + "/" + arrayAdapter.getItem(position));
+                startActivity(openPDF);
+
 
             } else {
-                dirName = arrayAdapter.getItem(position);
-                Intent openDirectory = new Intent(SelectSong.this, SelectSong.class);
-                openDirectory.putExtra(SelectSong.EXTRA_MESSAGE, intent.getStringExtra(SelectSong.EXTRA_MESSAGE) + "/" + arrayAdapter.getItem(position));
-                resultCode = 80;
-                activityResultLauncher.launch(openDirectory);
-
+                Intent openDirectory = new Intent(Songbook.this, Songbook.class);
+                openDirectory.putExtra(Songbook.EXTRA_MESSAGE, intent.getStringExtra(Songbook.EXTRA_MESSAGE) + "/" + arrayAdapter.getItem(position));
+                startActivity(openDirectory);
             }
         });
     }
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        resultCode = savedInstanceState.getInt("resultCode", 78);
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putInt("resultCode", resultCode);
-        super.onSaveInstanceState(outState);
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -162,7 +118,7 @@ public class SelectSong extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                SelectSong.this.arrayAdapter.getFilter().filter(newText);
+                Songbook.this.arrayAdapter.getFilter().filter(newText);
                 return false;
             }
 
@@ -179,4 +135,6 @@ public class SelectSong extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
+
+
 }

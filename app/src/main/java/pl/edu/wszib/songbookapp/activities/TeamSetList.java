@@ -1,4 +1,4 @@
-package pl.edu.wszib.songbookapp;
+package pl.edu.wszib.songbookapp.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import pl.edu.wszib.songbookapp.R;
 import pl.edu.wszib.songbookapp.adapters.DedicationAdapter;
 import pl.edu.wszib.songbookapp.models.DedicationModel;
 import pl.edu.wszib.songbookapp.services.ISetListService;

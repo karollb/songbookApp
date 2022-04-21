@@ -1,4 +1,4 @@
-package pl.edu.wszib.songbookapp;
+package pl.edu.wszib.songbookapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
+import pl.edu.wszib.songbookapp.R;
 import pl.edu.wszib.songbookapp.models.User;
 import pl.edu.wszib.songbookapp.services.ITeamService;
 import pl.edu.wszib.songbookapp.services.IUserGoogleService;

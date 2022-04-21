@@ -1,4 +1,4 @@
-package pl.edu.wszib.songbookapp;
+package pl.edu.wszib.songbookapp.activities;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -12,12 +12,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
 
+import pl.edu.wszib.songbookapp.R;
 import pl.edu.wszib.songbookapp.services.ITeamService;
 import pl.edu.wszib.songbookapp.services.impl.TeamServiceImpl;
 
-public class TeamJoin extends AppCompatActivity {
+public class TeamMaker extends AppCompatActivity {
 
-    private EditText teamNameView,teamPasswordView;
+    private EditText teamNameView, teamPasswordView;
+
     private Button submitBtn;
 
 
@@ -26,8 +28,9 @@ public class TeamJoin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_team_join);
+        setContentView(R.layout.activity_team_maker);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
 
         setToolbar();
         setViews();
@@ -39,24 +42,23 @@ public class TeamJoin extends AppCompatActivity {
             if (teamName.isEmpty() || teamPassword.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Wypełnij nazwę zespołu i hasło", Toast.LENGTH_SHORT).show();
             } else {
-                teamService.joinToTeam(getApplicationContext(),this ,teamName, teamPassword);
+                teamService.createTeam(getApplicationContext(), this, teamName, teamPassword);
             }
         });
     }
 
 
-
     private void setViews() {
-        this.teamNameView = findViewById(R.id.joinTeamName);
-        this.teamPasswordView = findViewById(R.id.joinTeamPassword);
-        this.submitBtn = findViewById(R.id.joinBtn);
+        this.teamNameView = findViewById(R.id.createTeamName);
+        this.teamPasswordView = findViewById(R.id.createTeamPassword);
+        this.submitBtn = findViewById(R.id.createBtn);
 
     }
 
     private void setToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         TextView toolbarTextView = toolbar.findViewById(R.id.toolbar_text_view);
-        toolbarTextView.setText("DOŁĄCZ DO ZESPOŁU");
+        toolbarTextView.setText("STWÓRZ ZESPÓŁ");
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 

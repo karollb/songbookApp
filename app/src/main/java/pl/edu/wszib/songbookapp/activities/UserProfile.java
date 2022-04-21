@@ -1,9 +1,8 @@
-package pl.edu.wszib.songbookapp;
+package pl.edu.wszib.songbookapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -15,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
+import pl.edu.wszib.songbookapp.R;
 import pl.edu.wszib.songbookapp.models.User;
 import pl.edu.wszib.songbookapp.services.ISongService;
 import pl.edu.wszib.songbookapp.services.IUserGoogleService;
@@ -67,14 +67,11 @@ public class UserProfile extends AppCompatActivity {
             startActivity(intent);
         });
 
-        setListBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userService.startActivityIfUserHasTeam(getApplicationContext(), path);
+        setListBtn.setOnClickListener(v -> {
+            userService.startActivityIfUserHasTeam(getApplicationContext(), path);
 //                Intent intent = new Intent(getApplicationContext(), TeamSetList.class);
 //                intent.putExtra(TeamSetList.EXTRA_MESSAGE, path);
 //                startActivity(intent);
-            }
         });
 
         teamBtn.setOnClickListener(v -> {

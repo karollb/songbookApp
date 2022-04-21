@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.File;
 import java.util.Objects;
 
-import pl.edu.wszib.songbookapp.PdfViewer;
+import pl.edu.wszib.songbookapp.activities.PdfViewer;
 import pl.edu.wszib.songbookapp.models.User;
 import pl.edu.wszib.songbookapp.services.ISongService;
 import pl.edu.wszib.songbookapp.services.IUserGoogleService;

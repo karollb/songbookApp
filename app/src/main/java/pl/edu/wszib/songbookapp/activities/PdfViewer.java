@@ -1,4 +1,4 @@
-package pl.edu.wszib.songbookapp;
+package pl.edu.wszib.songbookapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import com.github.barteksc.pdfviewer.PDFView;
 import java.io.File;
 import java.util.Objects;
 
+import pl.edu.wszib.songbookapp.R;
 import pl.edu.wszib.songbookapp.services.ISongService;
 import pl.edu.wszib.songbookapp.services.IUserGoogleService;
 import pl.edu.wszib.songbookapp.services.impl.SongServiceImpl;
